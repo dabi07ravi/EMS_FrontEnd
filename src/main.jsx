@@ -6,10 +6,14 @@ import EmployeeProvider from "./context/EmployeeContext";
 
 import AuthProvider from "./context/AuthContext.jsx";
 
+import TaskProvider from "./context/TaskContext.jsx";
+
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
     <EmployeeProvider>
-      <App />
+      <TaskProvider>
+        <App />
+      </TaskProvider>
     </EmployeeProvider>
   </AuthProvider>,
 );
