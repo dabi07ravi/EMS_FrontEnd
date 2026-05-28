@@ -2,7 +2,7 @@ function Sidebar() {
 
   return (
 
- <div className="w-[250px] text-white">
+ <div className="w-[250px] text-white bg-gray-900">
 
       <h1 className="p-5 text-2xl font-bold border-b border-gray-700">
         EMS

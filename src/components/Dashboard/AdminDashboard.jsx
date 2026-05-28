@@ -1,7 +1,9 @@
 import Sidebar from "../Layout/Sidebar";
 import Header from "../Layout/Header";
 import DashboardCard from "./DashboardCard";
+import TaskCard from "../Task/TaskCard"
 import { useState, useContext } from "react";
+
 
 import { EmployeeContext } from "../../context/EmployeeContext";
 
@@ -113,9 +115,32 @@ function AdminDashboard() {
     setDeadline("");
   }
 
+  function handleDeleteTask(id) {
+    const filteredTasks = tasks.filter((task) => task.id !== id);
+
+    setTasks(filteredTasks);
+  }
+
+  // TOTAL TASKS
+  const totalTasks = tasks.length;
+
+  // COMPLETED TASKS
+  const completedTasks = tasks.filter(
+    (task) => task.status === "Completed",
+  ).length;
+
+  // PENDING TASKS
+  const pendingTasks = tasks.filter((task) => task.status === "Pending").length;
+
+  // IN PROGRESS TASKS
+  const inProgressTasks = tasks.filter(
+    (task) => task.status === "In Progress",
+  ).length;
+
+  let totalEmployee = employees.length;
+
   return (
     <div className="flex min-h-screen bg-gray-900">
-  
       <Sidebar />
 
       <div className="flex-1 bg-gray-100 min-h-screen">
@@ -125,13 +150,15 @@ function AdminDashboard() {
           <h1 className="mb-5 text-3xl font-bold">Welcome Admin</h1>
 
           <div className="grid grid-cols-4 gap-5">
-            <DashboardCard title="Total Employees" value="50" />
+            <DashboardCard title="Total Employees" value={totalEmployee} />
 
-            <DashboardCard title="Completed Tasks" value="120" />
+            <DashboardCard title="Total Tasks" value={totalTasks} />
 
-            <DashboardCard title="Pending Tasks" value="32" />
+            <DashboardCard title="Completed Tasks" value={completedTasks} />
 
-            <DashboardCard title="Active Employees" value="45" />
+            <DashboardCard title="Pending Tasks" value={pendingTasks} />
+
+            <DashboardCard title="In Progress Tasks" value={inProgressTasks} />
           </div>
 
           <div className="mt-10 rounded-xl bg-white p-5 shadow">
@@ -169,7 +196,7 @@ function AdminDashboard() {
               </button>
             </form>
 
-            <br/>
+            <br />
 
             <h1 className="mb-5 text-2xl font-bold">Create Task</h1>
 
@@ -236,6 +263,32 @@ function AdminDashboard() {
                 Assign Task
               </button>
             </form>
+          </div>
+
+          <div className="mt-10">
+            <h1 className="mb-5 text-2xl font-bold">All Tasks</h1>
+
+            <div className="flex flex-col gap-5">
+                   {
+    tasks.map((task) => (
+
+      <TaskCard
+
+        key={task.id}
+
+        task={task}
+
+        showActions={true}
+
+        handleDeleteTask={
+          handleDeleteTask
+        }
+
+      />
+
+    ))
+  }
+            </div>
           </div>
 
           <div className="mt-10">
