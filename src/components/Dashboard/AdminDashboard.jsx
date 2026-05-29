@@ -19,6 +19,7 @@ function AdminDashboard() {
   const [email, setEmail] = useState("");
   const [department, setDepartment] = useState("");
   const [editId, setEditId] = useState(null);
+  const [password] = useState('123')
 
   const [title, setTitle] = useState("");
 
@@ -41,7 +42,9 @@ function AdminDashboard() {
             ...emp,
             name,
             email,
+            password,
             department,
+            role : "employee"
           };
         }
 
@@ -59,6 +62,8 @@ function AdminDashboard() {
         id: Date.now(),
         name,
         email,
+        password,
+        role : "employee",
         department,
       };
 
@@ -137,7 +142,7 @@ function AdminDashboard() {
     (task) => task.status === "In Progress",
   ).length;
 
-  let totalEmployee = employees.length;
+  let totalEmployee = employees.filter((emp) => emp.role !== 'admin');
 
   return (
     <div className="flex min-h-screen bg-gray-900">
@@ -150,7 +155,7 @@ function AdminDashboard() {
           <h1 className="mb-5 text-3xl font-bold">Welcome Admin</h1>
 
           <div className="grid grid-cols-4 gap-5">
-            <DashboardCard title="Total Employees" value={totalEmployee} />
+            <DashboardCard title="Total Employees" value={totalEmployee.length} />
 
             <DashboardCard title="Total Tasks" value={totalTasks} />
 
@@ -296,7 +301,10 @@ function AdminDashboard() {
 
             <div className="flex flex-col gap-4">
               {employees.map((emp) => (
-                <div
+
+                emp.role != 'admin' &&
+              
+           <div
                   key={emp.id}
                   className="flex items-center justify-between rounded-lg bg-white p-5 shadow"
                 >

@@ -36,8 +36,8 @@ export const AuthContext =
   }, [loggedInUser])
         
           // LOGIN FUNCTION
-  function login(user){
-
+      function login(user) {
+    
     setLoggedInUser(user)
 
   }

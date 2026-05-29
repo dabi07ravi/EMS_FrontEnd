@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../context/AuthContext";
 
-import employees from "../../data/employees";
+import { EmployeeContext } from "../../context/EmployeeContext";
+
+
 
 const Login = () => {
   
@@ -14,8 +16,12 @@ const Login = () => {
 
   const { login } = useContext(AuthContext);
 
+  const { employees } = useContext(EmployeeContext);
+
+
   function handleSubmit(e) {
     e.preventDefault();
+
     const user = employees.find(
       (emp) => emp.email === email && emp.password === password,
     );

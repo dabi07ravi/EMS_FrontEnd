@@ -6,6 +6,10 @@ import {
 
 
 // CREATE CONTEXT
+
+import employeesData from "../data/employees"
+
+
 export const EmployeeContext = createContext()
 
 
@@ -21,19 +25,10 @@ function EmployeeProvider({ children }) {
 
       return storedEmployees
         ? JSON.parse(storedEmployees)
-        : [
-            {
-              id: 1,
-              name: "Ravi",
-              email: "ravi@gmail.com",
-              department: "Frontend"
-            }
-          ]
+        : employeesData
 
     })
-
-
-
+  
   // SAVE TO LOCALSTORAGE
   useEffect(() => {
 

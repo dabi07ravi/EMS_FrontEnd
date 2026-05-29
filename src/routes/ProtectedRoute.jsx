@@ -20,7 +20,7 @@ function ProtectedRoute({
   // NOT LOGGED IN
   if(!loggedInUser){
 
-    return <Navigate to="/" />
+    return <Navigate to="/login" />
 
   }
 
@@ -29,7 +29,7 @@ function ProtectedRoute({
   // WRONG ROLE
   if(loggedInUser.role !== role){
 
-    return <Navigate to="/" />
+    return <Navigate to="/login" />
 
   }
 

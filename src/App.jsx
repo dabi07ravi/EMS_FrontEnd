@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./components/Auth/Login";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
@@ -10,10 +10,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
+        <Route path="/" element={<Navigate to={'/login'} />} />
 
-        <Route path="/login" element={<Login />} />
-
+        <Route path="/login" element={<Login/> } />
         <Route
           path="/admin-dashboard"
           element={
