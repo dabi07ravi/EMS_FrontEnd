@@ -9,11 +9,13 @@ from "../context/AuthContext"
 
 function ProtectedRoute({
   children,
-  role
+  roles
 }) {
 
   const { loggedInUser } =
     useContext(AuthContext)
+  
+  
 
 
 
@@ -27,7 +29,7 @@ function ProtectedRoute({
 
 
   // WRONG ROLE
-  if(loggedInUser.role !== role){
+  if(!roles.includes(loggedInUser.role)){
 
     return <Navigate to="/login" />
 

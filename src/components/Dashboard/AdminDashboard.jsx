@@ -1,9 +1,8 @@
 import Sidebar from "../Layout/Sidebar";
 import Header from "../Layout/Header";
 import DashboardCard from "./DashboardCard";
-import TaskCard from "../Task/TaskCard"
+import TaskCard from "../Task/TaskCard";
 import { useState, useContext } from "react";
-
 
 import { EmployeeContext } from "../../context/EmployeeContext";
 
@@ -19,7 +18,7 @@ function AdminDashboard() {
   const [email, setEmail] = useState("");
   const [department, setDepartment] = useState("");
   const [editId, setEditId] = useState(null);
-  const [password] = useState('123')
+  const [password] = useState("123");
 
   const [title, setTitle] = useState("");
 
@@ -30,6 +29,8 @@ function AdminDashboard() {
   const [priority, setPriority] = useState("Low");
 
   const [deadline, setDeadline] = useState("");
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   function handleAddEmployee(e) {
     e.preventDefault();
@@ -44,7 +45,7 @@ function AdminDashboard() {
             email,
             password,
             department,
-            role : "employee"
+            role: "employee",
           };
         }
 
@@ -63,7 +64,7 @@ function AdminDashboard() {
         name,
         email,
         password,
-        role : "employee",
+        role: "employee",
         department,
       };
 
@@ -126,6 +127,32 @@ function AdminDashboard() {
     setTasks(filteredTasks);
   }
 
+
+  const filteredEmployees = employees.filter((emp) => {
+
+  return (
+    emp.role !== "admin" &&
+    (
+      emp.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+
+      ||
+
+      emp.email
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+
+      ||
+
+      emp.department
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    )
+  );
+
+});
+
   // TOTAL TASKS
   const totalTasks = tasks.length;
 
@@ -142,7 +169,7 @@ function AdminDashboard() {
     (task) => task.status === "In Progress",
   ).length;
 
-  let totalEmployee = employees.filter((emp) => emp.role !== 'admin');
+  let totalEmployee = employees.filter((emp) => emp.role !== "admin");
 
   return (
     <div className="flex min-h-screen bg-gray-900">
@@ -155,7 +182,10 @@ function AdminDashboard() {
           <h1 className="mb-5 text-3xl font-bold">Welcome Admin</h1>
 
           <div className="grid grid-cols-4 gap-5">
-            <DashboardCard title="Total Employees" value={totalEmployee.length} />
+            <DashboardCard
+              title="Total Employees"
+              value={totalEmployee.length}
+            />
 
             <DashboardCard title="Total Tasks" value={totalTasks} />
 
@@ -274,25 +304,14 @@ function AdminDashboard() {
             <h1 className="mb-5 text-2xl font-bold">All Tasks</h1>
 
             <div className="flex flex-col gap-5">
-                   {
-    tasks.map((task) => (
-
-      <TaskCard
-
-        key={task.id}
-
-        task={task}
-
-        showActions={true}
-
-        handleDeleteTask={
-          handleDeleteTask
-        }
-
-      />
-
-    ))
-  }
+              {tasks.map((task) => (
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  showActions={true}
+                  handleDeleteTask={handleDeleteTask}
+                />
+              ))}
             </div>
           </div>
 
@@ -300,43 +319,51 @@ function AdminDashboard() {
             <h1 className="mb-5 text-2xl font-bold">Employees</h1>
 
             <div className="flex flex-col gap-4">
-              {employees.map((emp) => (
+              <input
+                type="text"
+                placeholder="Search Employee..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full rounded border p-3"
+              />
 
-                emp.role != 'admin' &&
-              
-           <div
-                  key={emp.id}
-                  className="flex items-center justify-between rounded-lg bg-white p-5 shadow"
-                >
-                  {/* LEFT SIDE */}
-                  <div>
-                    <h1 className="text-xl font-bold">{emp.name}</h1>
-
-                    <p className="text-gray-500">{emp.email}</p>
-                  </div>
-
-                  {/* RIGHT SIDE */}
-                  <div className="flex items-center gap-4">
-                    <h2 className="rounded bg-blue-100 px-3 py-1 text-blue-700">
-                      {emp.department}
-                    </h2>
-
-                    <button
-                      onClick={() => handleEditEmployee(emp)}
-                      className="rounded bg-yellow-500 px-4 py-2 text-white"
+              {filteredEmployees.map(
+                (emp) =>
+                    (
+                    <div
+                      key={emp.id}
+                      className="flex items-center justify-between rounded-lg bg-white p-5 shadow"
                     >
-                      Edit
-                    </button>
+                      {/* LEFT SIDE */}
+                      <div>
+                        <h1 className="text-xl font-bold">{emp.name}</h1>
 
-                    <button
-                      onClick={() => handleDeleteEmployee(emp.id)}
-                      className="rounded bg-red-500 px-4 py-2 text-white"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              ))}
+                        <p className="text-gray-500">{emp.email}</p>
+                      </div>
+
+                      {/* RIGHT SIDE */}
+                      <div className="flex items-center gap-4">
+                        <h2 className="rounded bg-blue-100 px-3 py-1 text-blue-700">
+                          {emp.department}
+                        </h2>
+
+                        <button
+                          onClick={() => handleEditEmployee(emp)}
+                          className="rounded bg-yellow-500 px-4 py-2 text-white"
+                        >
+                          Edit
+                        </button>
+
+                        <button
+                          onClick={() => handleDeleteEmployee(emp.id)}
+                          className="rounded bg-red-500 px-4 py-2 text-white"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ),
+              )}
             </div>
           </div>
         </div>

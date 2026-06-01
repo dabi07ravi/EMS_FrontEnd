@@ -53,8 +53,7 @@ export const AuthContext =
     )
 
   }
-        
-        
+          
 
   return (
 
@@ -62,7 +61,8 @@ export const AuthContext =
       value={{
         loggedInUser,
         login,
-        logout
+        logout,
+        setLoggedInUser
       }}
     >
 

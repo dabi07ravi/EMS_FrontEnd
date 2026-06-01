@@ -4,6 +4,8 @@ import Login from "./components/Auth/Login";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import EmployeeDashboard from "./components/Dashboard/EmployeeDashboard";
 
+import Profile from "./Pages/Profile/Profile"
+
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
@@ -16,16 +18,25 @@ function App() {
         <Route
           path="/admin-dashboard"
           element={
-            <ProtectedRoute role="admin">
+            <ProtectedRoute roles={["employee","admin"]}>
               <AdminDashboard />
             </ProtectedRoute>
+          }
+        />
+
+          <Route
+          path="/profile"
+          element={
+            // <ProtectedRoute roles={["employee", "admin"]}>
+              <Profile />
+            // </ProtectedRoute>
           }
         />
 
         <Route
           path="/employee-dashboard"
           element={
-            <ProtectedRoute role="employee">
+            <ProtectedRoute roles={["employee", "admin"]}>
               <EmployeeDashboard />
             </ProtectedRoute>
           }
