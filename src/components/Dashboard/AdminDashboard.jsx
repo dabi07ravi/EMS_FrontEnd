@@ -3,6 +3,7 @@ import Header from "../Layout/Header";
 import DashboardCard from "./DashboardCard";
 import TaskCard from "../Task/TaskCard";
 import { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 
 import { EmployeeContext } from "../../context/EmployeeContext";
 
@@ -127,31 +128,14 @@ function AdminDashboard() {
     setTasks(filteredTasks);
   }
 
-
   const filteredEmployees = employees.filter((emp) => {
-
-  return (
-    emp.role !== "admin" &&
-    (
-      emp.name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-
-      ||
-
-      emp.email
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-
-      ||
-
-      emp.department
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-    )
-  );
-
-});
+    return (
+      emp.role !== "admin" &&
+      (emp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        emp.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        emp.department.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  });
 
   // TOTAL TASKS
   const totalTasks = tasks.length;
@@ -327,43 +311,45 @@ function AdminDashboard() {
                 className="w-full rounded border p-3"
               />
 
-              {filteredEmployees.map(
-                (emp) =>
-                    (
-                    <div
-                      key={emp.id}
-                      className="flex items-center justify-between rounded-lg bg-white p-5 shadow"
+              {filteredEmployees.map((emp) => (
+                <div
+                  key={emp.id}
+                  className="flex items-center justify-between rounded-lg bg-white p-5 shadow"
+                >
+                  {/* LEFT SIDE */}
+                  <div>
+                    <Link
+                      to={`/employees/${emp.id}`}
+                      className="text-xl font-bold text-black-600 hover:underline"
                     >
-                      {/* LEFT SIDE */}
-                      <div>
-                        <h1 className="text-xl font-bold">{emp.name}</h1>
+                      {emp.name}
+                    </Link>
 
-                        <p className="text-gray-500">{emp.email}</p>
-                      </div>
+                    <p className="text-gray-500">{emp.email}</p>
+                  </div>
 
-                      {/* RIGHT SIDE */}
-                      <div className="flex items-center gap-4">
-                        <h2 className="rounded bg-blue-100 px-3 py-1 text-blue-700">
-                          {emp.department}
-                        </h2>
+                  {/* RIGHT SIDE */}
+                  <div className="flex items-center gap-4">
+                    <h2 className="rounded bg-blue-100 px-3 py-1 text-blue-700">
+                      {emp.department}
+                    </h2>
 
-                        <button
-                          onClick={() => handleEditEmployee(emp)}
-                          className="rounded bg-yellow-500 px-4 py-2 text-white"
-                        >
-                          Edit
-                        </button>
+                    <button
+                      onClick={() => handleEditEmployee(emp)}
+                      className="rounded bg-yellow-500 px-4 py-2 text-white"
+                    >
+                      Edit
+                    </button>
 
-                        <button
-                          onClick={() => handleDeleteEmployee(emp.id)}
-                          className="rounded bg-red-500 px-4 py-2 text-white"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  ),
-              )}
+                    <button
+                      onClick={() => handleDeleteEmployee(emp.id)}
+                      className="rounded bg-red-500 px-4 py-2 text-white"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

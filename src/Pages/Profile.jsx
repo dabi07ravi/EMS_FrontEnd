@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 
-import { EmployeeContext } from "../../context/EmployeeContext";
+import { EmployeeContext } from "../context/EmployeeContext";
 
 
 
@@ -94,7 +94,7 @@ function Profile() {
           />
         </div>
 
-        <button className="rounded bg-blue-500 px-6 py-3 text-white">
+        <button className="rounded bg-black-500 px-6 py-3 text-white">
           Update Profile
         </button>
       </form>

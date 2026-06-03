@@ -4,7 +4,11 @@ import Login from "./components/Auth/Login";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import EmployeeDashboard from "./components/Dashboard/EmployeeDashboard";
 
-import Profile from "./Pages/Profile/Profile"
+import Profile from "./Pages/Profile";
+
+import EmployeeDetails from "./Pages/Employee";
+
+import Employees from "./Pages/Employees";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 
@@ -12,24 +16,24 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to={'/login'} />} />
+        <Route path="/" element={<Navigate to={"/login"} />} />
 
-        <Route path="/login" element={<Login/> } />
+        <Route path="/login" element={<Login />} />
         <Route
           path="/admin-dashboard"
           element={
-            <ProtectedRoute roles={["employee","admin"]}>
+            <ProtectedRoute roles={["employee", "admin"]}>
               <AdminDashboard />
             </ProtectedRoute>
           }
         />
 
-          <Route
+        <Route
           path="/profile"
           element={
-            // <ProtectedRoute roles={["employee", "admin"]}>
+            <ProtectedRoute roles={["employee", "admin"]}>
               <Profile />
-            // </ProtectedRoute>
+            </ProtectedRoute>
           }
         />
 
@@ -38,6 +42,24 @@ function App() {
           element={
             <ProtectedRoute roles={["employee", "admin"]}>
               <EmployeeDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/employees/:id"
+          element={
+            <ProtectedRoute roles={["employee", "admin"]}>
+              <EmployeeDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/employees"
+          element={
+            <ProtectedRoute roles={["employee", "admin"]}>
+              <Employees />
             </ProtectedRoute>
           }
         />
